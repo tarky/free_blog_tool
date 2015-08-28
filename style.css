@@ -1,14 +1,15 @@
-a.afilink{
+a.afi_link{
     font-weight: bold;
     font-size: 150%;
     color: #0000ff !important;
     text-decoration: underline;
-	}
-a.afilink:visited { color: #000080 !important; }
-a.afilink:hover { color: #ff0000 !important; }
-a.afilink:active { color: #ff8000 !important; }
+}
+a.afi_link:visited { color: #000080 !important; }
+a.afi_link:hover   { color: #ff0000 !important; }
+a.afi_link:active  { color: #ff8000 !important; }
+
 strong{
    font-weight: bold;
    font-size: 150%;
-   color: #0000ff !important;
+   color: #FF0000 !important;
 }
