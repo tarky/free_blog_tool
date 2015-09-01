@@ -4,6 +4,7 @@ root: .
 windows:
   - main:
     - ln -s ../../free_blog_tool/style.css style.css
+    - cp ../../free_blog_tool/articles.md .
     - atom articles.md
   - guard:
     - guard -G ../../free_blog_tool/Guardfile
