@@ -4,10 +4,13 @@ require "capybara"
 require "kramdown"
 require "nokogiri"
 require "csv"
-$csv_file = '/Volumes/BOOTCAMP/Users/tarky/Desktop/rakunote1.0.8.9/rakunote1.0.8.9/data/blog.csv'
+require "yaml"
+$config = YAML.load_file(File.expand_path('../.config.yml', __FILE__))
+
 include Capybara::DSL
 
 class FreeBlogger
+  attr_reader  :id, :login_id, :password, :title, :articles
 
   def initialize(id)
     @id       = id
@@ -19,7 +22,9 @@ class FreeBlogger
   end
 
   def self.get_blog_info(id)
-    csv = CSV.parse(open($csv_file, "rb:Shift_JIS:UTF-8").read, headers: true)
+    csv = CSV.parse(
+      open($config["blog_info_path"], "rb:Shift_JIS:UTF-8").read, headers: true
+    )
     csv.find { |row| row["ブログNo."] == id }
   end
 
