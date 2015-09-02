@@ -1,0 +1,16 @@
+http://api.my.yahoo.co.jp/RPC2
+http://blog.goo.ne.jp/XMLRPC
+http://blogsearch.google.co.jp/ping/RPC2
+http://blogsearch.google.com/ping/RPC2
+http://ping.blo.gs/
+http://ping.blogranking.net/
+http://ping.dendou.jp/
+http://ping.fc2.com/
+http://ping.freeblogranking.com/xmlrpc/
+http://ping.myblog.jp/
+http://pingoo.jp/ping/
+http://rpc.weblogs.com/RPC2
+http://serenebach.net/rep.cgi
+http://taichistereo.net/xmlrpc/
+http://www.i-learn.jp/ping/
+http://www.blogpeople.net/servlet/weblogUpdates
