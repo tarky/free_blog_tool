@@ -6,11 +6,16 @@ require "nokogiri"
 require "retriable"
 require "csv"
 require "yaml"
+
 $config = YAML.load_file(File.expand_path('../.config.yml', __FILE__))
 
-include Capybara::DSL
+Capybara.register_driver :selenium_chrome do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
+Capybara.default_driver = :selenium_chrome
 
 class FreeBlogger
+  include Capybara::DSL
   attr_reader  :id, :login_id, :password, :title, :articles, :i2i_tag
 
   def initialize(id)
@@ -52,15 +57,8 @@ class FreeBlogger
     end
   end
 
-  def prepare_capybara
-    Capybara.register_driver :selenium_chrome do |app|
-      Capybara::Selenium::Driver.new(app, :browser => :chrome)
-    end
-    Capybara.default_driver = :selenium_chrome
-  end
-
   def sign_in
-    visit        'http://blog.seesaa.jp'
+    visit        $config['url']['seesaa']
     click_link   'ログイン'
     fill_in      'email',    with: @login_id
     fill_in      'password', with: @password
