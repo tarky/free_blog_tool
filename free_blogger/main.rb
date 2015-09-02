@@ -92,7 +92,7 @@ class FreeBlogger
     end
   end
 
-  def get_i2i_tag
+  def create_i2i_tag
     visit        $config['url']['i2i']
     fill_in      'loginId', with: $config['i2i']['user_id']
     fill_in      'loginPw', with: $config['i2i']['password']
@@ -108,10 +108,29 @@ class FreeBlogger
     click_button '確認へ進む'
     click_button '登録する'
     click_button 'タグ発行画面'
-    @i2i_tag = find('#tag').value
+    tag = find('#tag').value
+    open("i2i_tag.txt", "w") do | f |
+      f.puts(tag)
+    end
+    tag
+  end
+
+  def get_i2i_tag
+    open("i2i_tag.txt") do | f |
+      f.read
+    end
+    rescue
+  end
+
+  def set_i2i_tag
+    @i2i_tag = get_i2i_tag || create_i2i_tag
   end
 
   def configure_blog
+    if @i2i_tag.nil?
+      p "set i2i_tag in advance!"
+      return
+    end
     self.sign_in
     Retriable.retriable { find(".navsettings a").click }
     find(:xpath, "//img[contains(@alt, 'ブログ設定')]").click
@@ -146,7 +165,7 @@ class FreeBlogger
     find(:xpath, "//li[contains(@data-dispatch_name, 'free')]/a[contains(@class, 'edit')]").click
     within_frame( find("#content_iframe")) do
        fill_in "content__title", with: "アクセス解析"
-       fill_in "content_free__text", with: "accesssssss"
+       fill_in "content_free__text", with: @i2i_tag
        click_button "保存"
     end
     find(".close").click
@@ -154,9 +173,9 @@ class FreeBlogger
   end
 end
 
-blogger = FreeBlogger.new(ARGV[0])
-blogger.prepare_capybara
-blogger.sign_in
-blogger.submit_in_batch
-
-sleep
+# blogger = FreeBlogger.new(ARGV[0])
+# blogger.prepare_capybara
+# blogger.sign_in
+# blogger.submit_in_batch
+#
+# sleep
