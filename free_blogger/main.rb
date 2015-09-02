@@ -27,7 +27,7 @@ class FreeBlogger
     f = open($config["blog_info_path"], "rb:Shift_JIS:UTF-8")
     csv = CSV.parse(f.read, headers: true)
     f.close
-    csv.find { |row| row["ブログNo."] == id }
+    csv.find { |row| row["ブログNo."] == id.to_s }
   end
 
   def self.get_articles
@@ -174,7 +174,7 @@ class FreeBlogger
   end
 end
 
-# blogger = FreeBlogger.new(ARGV[0])
+# blogger = FreeBlogger.new(ARGV[0].to_i)
 # blogger.prepare_capybara
 # blogger.sign_in
 # blogger.submit_in_batch
