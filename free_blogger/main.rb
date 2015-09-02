@@ -24,9 +24,9 @@ class FreeBlogger
   end
 
   def self.get_blog_info(id)
-    csv = CSV.parse(
-      open($config["blog_info_path"], "rb:Shift_JIS:UTF-8").read, headers: true
-    )
+    f = open($config["blog_info_path"], "rb:Shift_JIS:UTF-8")
+    csv = CSV.parse(f.read, headers: true)
+    f.close
     csv.find { |row| row["ブログNo."] == id }
   end
 
@@ -143,6 +143,7 @@ class FreeBlogger
     find("#article_setting__affiliate_link_0").click
     f = open(File.expand_path('../ping_list.txt', __FILE__))
     fill_in 'article_setting__update_ping', with: f.read
+    f.close
     click_button "保存"
 
     Retriable.retriable { find(".navsettings a").click }
